@@ -1,5 +1,10 @@
 # Posts.
 
+## Run instructions
+
+- Run `npm start` to start angular dev server.
+- Or run `npm run build` + serve `dist/apps/nitro-posts` content using any http static server (e.g. [http-server](https://www.npmjs.com/package/http-server)).
+
 ## Architecture
 
 Application is based on the NX monorepo architecture and consists of the following application and libraries:
