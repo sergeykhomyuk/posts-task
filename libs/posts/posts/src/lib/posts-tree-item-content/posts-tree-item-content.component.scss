@@ -1,0 +1,38 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.post-header {
+  font: var(--tui-font-text-l);
+  display: flex;
+  align-items: center;
+}
+
+.post-time {
+  font: var(--tui-font-text-xl);
+  text-align: center;
+}
+
+.post-time,
+.post-info {
+  color: var(--tui-text-02);
+}
+
+.post-month,
+.post-status {
+  font: var(--tui-font-text-s);
+}
+
+.post-title {
+  @include text-overflow();
+  margin: 24px;
+  flex-grow: 1;
+}
+
+.post-info {
+  text-align: right;
+}
+
+.post-author,
+.post-location {
+  @include text-overflow();
+  max-width: 150px;
+}

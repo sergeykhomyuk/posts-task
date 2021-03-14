@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nitro/core": ["libs/core/src/index.ts"],
+      "@nitro/posts/api": ["libs/posts/api/src/index.ts"],
+      "@nitro/posts/core": ["libs/posts/core/src/index.ts"],
+      "@nitro/posts/posts": ["libs/posts/posts/src/index.ts"],
+      "@nitro/layout": ["libs/layout/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

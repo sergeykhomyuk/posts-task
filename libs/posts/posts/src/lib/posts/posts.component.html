@@ -1,0 +1,26 @@
+<tui-loader [overlay]="true" [showLoader]="state.isLoading">
+  <nitro-posts-tree
+    *ngIf="!state.isFailed"
+    [posts]="posts"
+    (postUpdated)="onPostUpdated($event)"
+  ></nitro-posts-tree>
+
+  <tui-island class="error-island" *ngIf="state.isFailed">
+    <h3 class="tui-island__title">
+      <tui-svg src="tuiIconCancel"></tui-svg> Error
+    </h3>
+    <p class="tui-island__paragraph">
+      Failed to load posts. Click "Refresh" to try again.
+    </p>
+    <button
+      tuiButton
+      type="button"
+      class="tui-island__footer-button"
+      appearance="flat"
+      size="m"
+      (click)="onTryLoadPosts()"
+    >
+      Refresh
+    </button>
+  </tui-island>
+</tui-loader>

@@ -1,0 +1,24 @@
+<nitro-posts-tree-header
+  [categoryType]="state.groupPostsByCategoryType"
+  (categoryTypeChanged)="onCategoryTypeChanged($event)"
+></nitro-posts-tree-header>
+<tui-accordion>
+  <tui-accordion-item
+    *ngFor="
+      let group of postsGroups
+        | sortPostsGroups: state.groupPostsByCategoryType;
+      trackBy: trackByGroup
+    "
+  >
+    <nitro-posts-tree-item-header
+      [category]="group.category"
+      [categoryPostsCount]="group.items.length"
+    ></nitro-posts-tree-item-header>
+    <ng-template tuiAccordionItemContent>
+      <nitro-posts-tree-item-content
+        [posts]="group.items"
+        (postUpdated)="onPostUpdated($event)"
+      ></nitro-posts-tree-item-content>
+    </ng-template>
+  </tui-accordion-item>
+</tui-accordion>

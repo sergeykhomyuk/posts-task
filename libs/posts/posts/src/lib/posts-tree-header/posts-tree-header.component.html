@@ -1,0 +1,63 @@
+<div class="tree-header">
+  <tui-hosted-dropdown [content]="dropdown" [(open)]="state.isOpen">
+    <a tuiLink class="link tui-text_body-m">
+      Group posts by
+      <span class="tui-text_bold">
+        <ng-container *ngIf="categoryType === PostCategoryType.Week"
+          >week</ng-container
+        >
+        <ng-container *ngIf="categoryType === PostCategoryType.Author"
+          >author</ng-container
+        >
+        <ng-container *ngIf="categoryType === PostCategoryType.Location"
+          >location</ng-container
+        >
+      </span>
+      <tui-svg
+        class="arrow"
+        [class.arrow_open]="state.isOpen"
+        src="tuiIconChevronDown"
+      ></tui-svg>
+    </a>
+  </tui-hosted-dropdown>
+</div>
+
+<ng-template #dropdown>
+  <tui-data-list>
+    <tui-opt-group>
+      <button
+        tuiOption
+        class="item"
+        (click)="onCategoryTypeChanged(PostCategoryType.Week)"
+      >
+        Week
+        <tui-svg
+          *ngIf="categoryType === PostCategoryType.Week"
+          src="tuiIconCheck"
+        ></tui-svg>
+      </button>
+      <button
+        tuiOption
+        class="item"
+        (click)="onCategoryTypeChanged(PostCategoryType.Author)"
+      >
+        Author
+        <tui-svg
+          *ngIf="categoryType === PostCategoryType.Author"
+          src="tuiIconCheck"
+        ></tui-svg>
+      </button>
+      <button
+        tuiOption
+        class="item"
+        (click)="onCategoryTypeChanged(PostCategoryType.Location)"
+      >
+        Location
+        <tui-svg
+          *ngIf="categoryType === PostCategoryType.Location"
+          src="tuiIconCheck"
+        ></tui-svg>
+      </button>
+    </tui-opt-group>
+  </tui-data-list>
+</ng-template>

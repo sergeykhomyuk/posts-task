@@ -1,0 +1,26 @@
+<tui-accordion>
+  <tui-accordion-item
+    *ngFor="let post of posts | sortPostsByTime; trackBy: trackByPost"
+  >
+    <div class="post-header">
+      <div class="post-time">
+        {{ post.time | date: 'd' }}
+        <div class="post-month">{{ post.time | date: 'MMMM' }}</div>
+      </div>
+      <div class="post-title">{{ post.text }}</div>
+      <div class="post-info">
+        <div class="post-author">{{ post.author }}</div>
+        <div class="post-location">
+          <tui-svg src="tuiIconPin"></tui-svg> {{ post.location }}
+        </div>
+      </div>
+    </div>
+
+    <ng-template tuiAccordionItemContent>
+      <nitro-edit-post-form
+        [post]="post"
+        (updated)="onPostUpdated($event)"
+      ></nitro-edit-post-form>
+    </ng-template>
+  </tui-accordion-item>
+</tui-accordion>

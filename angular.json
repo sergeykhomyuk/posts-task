@@ -28,7 +28,13 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "changeDetection": "OnPush"
+    },
+    "@schematics/angular": {
+      "component": {
+        "changeDetection": "OnPush"
+      }
     }
   },
   "projects": {
@@ -49,10 +55,21 @@
             "aot": true,
             "assets": [
               "apps/nitro-posts/src/favicon.ico",
-              "apps/nitro-posts/src/assets"
+              "apps/nitro-posts/src/assets",
+              "apps/nitro-posts/src/api",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@taiga-ui/icons/src",
+                "output": "assets/taiga-ui/icons"
+              }
             ],
-            "styles": ["apps/nitro-posts/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "apps/nitro-posts/src/styles.scss",
+              "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
+              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": ["date-fns/fp", "angular2-text-mask"]
           },
           "configurations": {
             "production": {
@@ -142,6 +159,131 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/nitro-posts-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "nitro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "posts-api": {
+      "projectType": "library",
+      "root": "libs/posts/api",
+      "sourceRoot": "libs/posts/api/src",
+      "prefix": "nitro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/posts/api/src/**/*.ts",
+              "libs/posts/api/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/posts/api"],
+          "options": {
+            "jestConfig": "libs/posts/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "posts-core": {
+      "projectType": "library",
+      "root": "libs/posts/core",
+      "sourceRoot": "libs/posts/core/src",
+      "prefix": "nitro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/posts/core/src/**/*.ts",
+              "libs/posts/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/posts/core"],
+          "options": {
+            "jestConfig": "libs/posts/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "posts-posts": {
+      "projectType": "library",
+      "root": "libs/posts/posts",
+      "sourceRoot": "libs/posts/posts/src",
+      "prefix": "nitro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/posts/posts/src/**/*.ts",
+              "libs/posts/posts/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/posts/posts"],
+          "options": {
+            "jestConfig": "libs/posts/posts/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "layout": {
+      "projectType": "library",
+      "root": "libs/layout",
+      "sourceRoot": "libs/layout/src",
+      "prefix": "nitro",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/layout/src/**/*.ts",
+              "libs/layout/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/layout"],
+          "options": {
+            "jestConfig": "libs/layout/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

@@ -1,0 +1,20 @@
+<div class="posts-category-header">
+  <div class="category-title">
+    <ng-container *ngIf="category?.type === PostCategoryType.Week">
+      {{ categoryTimeValue.from | date }} - {{ categoryTimeValue.to | date }}
+    </ng-container>
+    <ng-container
+      *ngIf="
+        category?.type === PostCategoryType.Author ||
+        category?.type === PostCategoryType.Location
+      "
+    >
+      {{ categoryStringValue }}
+    </ng-container>
+  </div>
+  <tui-badge
+    class="tui-space_left-2"
+    status="primary"
+    [value]="categoryPostsCount || 0"
+  ></tui-badge>
+</div>

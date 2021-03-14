@@ -1,0 +1,66 @@
+<tui-loader [overlay]="true" [showLoader]="!postForm">
+  <form *ngIf="postForm" [formGroup]="postForm" (ngSubmit)="onUpdatePost()">
+    <div class="tui-form__row">
+      <tui-input
+        class="input"
+        formControlName="author"
+        icon="tuiIconDraft"
+        iconAlign="right"
+        >Author</tui-input
+      >
+      <tui-field-error formControlName="author"></tui-field-error>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input
+        class="input"
+        formControlName="location"
+        icon="tuiIconDraft"
+        iconAlign="right"
+        >Location</tui-input
+      >
+      <tui-field-error formControlName="location"></tui-field-error>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input-date-time
+        class="input"
+        formControlName="time"
+        [readOnly]="true"
+        >Time</tui-input-date-time
+      >
+    </div>
+
+    <div class="tui-form__row">
+      <tui-text-area
+        [readOnly]="true"
+        [expandable]="true"
+        [rows]="3"
+        formControlName="text"
+        >Text</tui-text-area
+      >
+    </div>
+
+    <div class="buttons tui-space_top-4">
+      <button
+        tuiButton
+        class="tui-space_right-2"
+        type="submit"
+        size="m"
+        [disabled]="postForm?.pristine || !postForm?.valid"
+      >
+        Save
+      </button>
+      <button
+        tuiButton
+        type="button"
+        appearance="flat"
+        size="m"
+        [disabled]="postForm?.pristine"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+</tui-loader>

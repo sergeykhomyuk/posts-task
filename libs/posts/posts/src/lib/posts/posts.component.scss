@@ -1,0 +1,10 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+.error-island {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .tui-island__title {
+    color: var(--tui-negative);
+  }
+}

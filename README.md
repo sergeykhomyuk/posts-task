@@ -1,105 +1,64 @@
+# Posts.
 
+## Architecture
 
-# Nitro
+Application is based on the NX monorepo architecture and consists of the following application and libraries:
 
-This project was generated using [Nx](https://nx.dev).
+- nitro-posts - application entry point (dummy)
+- layout - application layout (dummy)
+- core - domain-independent utils, helpers, services shared across all modules
+- posts - posts feature library
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+NOTE: run `npm run dep-graph` to generate modules dependencies graph.
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+Application architecture could be easily scaled by adding new libraries and expanding existing ones by adding new feature modules.
+The team could easily define new schematics and add them `tools` to scaffold new libraries.
 
-## Quick Start & Documentation
+### Architecture principles
 
-[Nx Documentation](https://nx.dev/angular)
+- Modular architecture (see `/libs`)
+- Strict modules boundaries (see `libs/posts/core/src/index.ts`, `.eslintrc.json` -> `@nrwl/nx/enforce-module-boundaries`, `nx.json` -> `projects`)
+- Lazy loading for routes (see `AppRoutingModule`)
+- Params validation (see `@required` and `Assert`)
+- Immutable models (see `Post`)
+- API models are mapped into UI models (see `PostsApiMappingService`, this allows BE and UI to have different naming conventions, reduces coupling between BE and UI, allows UI to support multiple API's versions without changing components, allows to use JS/custom types in models (not just JSON types))
+- Low cyclomatic complexity (use async/await to keep code flat (Promises could be replaced with Observables if the team prefers them), splitting large methods)
+- Single object responsibility (see `PostsTreeComponent`)
+- Business logic encapsulation (see `PostsService`)
+- ChangeDetectionStrategy: OnPush
+- Split components into 3 categories:
+  - Containers: resolve dependencies, handle state (see `PostsComponent`)
+  - Dummy: render state (see `PostsTreeHeaderComponent`)
+  - Entry: resolve params (routes, dialog), manage layout (see `PostsPageComponent`)
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+## Pre-requirements
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+- Collect requirements, use- and edge- cases from all users categories
+- Define high-level requirements, split them into epics -> user stories / tasks -> sub-tasks
+- Define API (e.g. use OAS)
+- Design UI (at least high-level mockups)
+- Define the list of supported browsers, devices, screen resolutions
+- Define budgets for bundles sizes, performance, memory consumption
+- Define the list of supported locales and languages
+- Define unit and e2e tests coverage requirements
+- Define code style guide, architecture, common patterns, and practices (adjust editor/eslint/prettier configs if required)
+- Define content security requirements (CSP, Subresource Integrity)
+- Define static content caching and compression policies
+- Define CI/CD pipeline to build staging/production images and run tests
+- Define pre-commit hooks
+- Define visual styleguide (color palette, UX/UI patterns), define core variables, mixins, animations, components
+- Define the list of dependencies, lock versions in `package.json`
+- Implement authentication and authorization (use `HttpInterceptor` to catch Unauthorized and Forbidden responses, use `CanActivate` guards to protect routes, introduce roles/stereotypes for all users types)
+- Implement exceptions handling (implement `LoggerService.captureException`, implement global `ErrorHandler`, implement handlers for 4XX/5XX's responses, implement NotFound page, implement not supported browser/device page)
+- Implement `Layout` module
+- Implement `AppVersionService` to detect new API/App versions
+- Implement Stores (e.g. based on NgRx) to cache data and share it across libraries/components hierarchies (suggestion: introduce middleware if it's required to save/restore the state to/from local storage)
+- Implement metrics/stats collection
+- Implement GDPR features (if application is going to store clients data)
 
-## Adding capabilities to your workspace
+## Backlog
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-## Generate an application
-
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@nitro/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-
-
-
-
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+- Integrate with real API (if BE can generate JSON schema for API - consider replacing `any`/`unknown` in mapping services with auto-generated TS interfaces)
+- Implement unit and e2e tests
+- Implement i18n for supported locales and languages (potentially replace all texts in API responses with i18n keys)
+- Implement accessibility features (aria, titles, tooltips, tab indexes, ...)

@@ -1,0 +1,9 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.posts-category-header {
+  display: flex;
+
+  .category-title {
+    @include text-overflow();
+  }
+}
